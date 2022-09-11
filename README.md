@@ -1,6 +1,16 @@
 # 2DEngine
 A small physics engine written using the Pygame module library. The design of the program takes influence from the classical model of forces interacting with one another and uses the axioms found in Euclidean geometry to determine angles, lines, and collision between a ball and the *cursor* across a two-dimensional plane.
 
+### Installation
+  Requires [Python3](https://www.python.org/downloads/) and [Pip](https://pypi.org/project/pip/)
+   
+  Install [Pygame](https://www.pygame.org/wiki/GettingStarted) using the following in any command line ran as *administrator*:
+  > **python3 -m pip install -U pygame**
+ 
+  or
+  > **py -m pip install pygame**
+  
+
 ## *Key Features*
 - An **internal clock** that measures the length in which the ball has provided itself abstinence from floor collision; its "*uptime*"
 - Visual indicators delineating the **vectors** applied in black, the *cursor's* **distance** from the ball in red, and the **inverse** of the *cursor's* angle from the ball in white 
