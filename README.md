@@ -17,7 +17,7 @@ A small physics engine written using the Pygame module library. The design of th
   - This demonstrates the direct relation between *triangular geometry* and the application of force therein onto an object
 - Application of **Newtonian Mechanics** such that the ball's interaction remains inert, predictable, and within realistic preoccupation
   - As the ball collides with a static object, in this case the *cursor* and borders of the screen, an opposite but equal force is applied to the ball
-  - The ball is applied with a constant force downwards using a fixed scalar multiplied by its time since decline to simulate *gravitational acceleration*
+  - The ball is applied with a constant force downwards using a fixed scalar multiplied by its time since last contact to simulate *gravitational acceleration*
 
 ## Future Directions 
 Several flaws appear in the chosen **method of collision**, where the *cursor* may collide too quickly with the ball and clip through there-on. Additionally, this would cause the algorithms used to calculate *angular velocity* to apply force to the ball at an angle opposite to where the *cursor* was last known approaching (i.e *as the cursor clips from below, a downward force is applied to the ball*). Moving forward from this, a solution may exist in exploring other methods of **collision detection** outside of checking-per-frame, with additional research prescribing the necessary action onward in its own vitality.
