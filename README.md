@@ -14,4 +14,5 @@ Several flaws appear in the chosen **method of collision**, where the *cursor* m
 
 ## Links
 [Pygame Documentation](https://www.pygame.org/docs/)
+
 [Resource Used for Mathematical Application](https://docs.python.org/3/library/math.html)
