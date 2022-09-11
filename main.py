@@ -30,7 +30,7 @@ def drawText(text, pos):                                                        
 def refresh():
     global counter
     
-    win.fill([255, 255, 255])                                                            # screen is made white
+    win.fill([255, 255, 255])                                                            # screen fills itself again so as to erase objects rendered from the previous frame
     ent.draw()                                                                           # "ent" is an instance of the class Ball
     ent.drawLine()
 
@@ -39,7 +39,7 @@ def refresh():
     pygame.draw.line(win, (0, 0, 0), (bx, (by - (by - ent.y))), ((ent.x + (bx - ent.x)), by))     # line drawn showing the vertical component vector
 
     if ballHit:                                                                          # "ballHit" is a boolean signifying whether the ball has been collided with or not
-        drawText(str(math.floor(tm.perf_counter() - counter)), (500, 50))                # starts the timer
+        drawText(str(math.floor(tm.perf_counter() - counter)), (500, 50))                # draws the timer
 
 def findNewPath(sy, angle, time):                                                        # estimates the path of the ball based on angle of contact, application of gravity, and a static scalar "power"
     ent.x += round(-math.cos(angle) * bounce * 2)
@@ -82,35 +82,34 @@ def findAngle(mx, my):                                      # produces an angle 
 
 ballHit = False                                           # "ballHit" is a boolean signifying whether the ball has been collided with or not
 
-bounce = 1                                                # "bounce" represents a number from 1 to -1 that signifies whether the ball should bounce left or right after colliding with a border                                              
-angle = 0
+bounce = 1                                                # "bounce" represents a number from 1 or -1 that signifies whether the ball should bounce or not
 time = 0                                                  # helps calculate the application of gravity over the time elapsed since last the ball was collided with
 y = 0
-counter = 0
+counter = 0                                               # simulates an "in-game" timer
 
-ent = Ball(500, 500, 40, (540, 500))
-main = True
+ent = Ball(500, 500, 40, (540, 500))                      # instantiates an instance "ent" of class Ball
+main = True                                                
 while main:
-    for e in pygame.event.get():
+    for e in pygame.event.get():                          # tells the game to close itself upon hitting escape
         if e.type == pygame.QUIT:
             main = False
     
-    bx, by = pygame.mouse.get_pos()
-    getKey = pygame.key.get_pressed()
+    bx, by = pygame.mouse.get_pos()                       # gets the position of the cursor
+    getKey = pygame.key.get_pressed()                     # gets the name of any key pressed
 
-    if getKey[pygame.K_SPACE]:
+    if getKey[pygame.K_SPACE]:                            # if space is pressed, the ball and timer are reset
         ballHit = False
         ent.x = 500
         ent.y = 500
         counter += tm.perf_counter() - counter
 
-    if (1000 < ent.x + ent.radius or 0 > ent.x - ent.radius) and bounce == 1:
+    if (1000 < ent.x + ent.radius or 0 > ent.x - ent.radius) and bounce == 1:          # determines whether the ball should bounce or not based on its position to either border
         bounce = -1
     elif (1000 < ent.x + ent.radius or 0 > ent.x - ent.radius) and bounce == -1:
         bounce = 1
 
-    if bx in range((ent.x - ent.radius), (ent.x + ent.radius)):
-        if by in range((ent.y - ent.radius), (ent.y + ent.radius)):
+    if bx in range((ent.x - ent.radius), (ent.x + ent.radius)):                       
+        if by in range((ent.y - ent.radius), (ent.y + ent.radius)):                    # determines if the cursor is colliding with the ball
             ballHit = True
             time = 0
             bounce = 1
@@ -119,18 +118,18 @@ while main:
             angle = findAngle(bx, by)
     
     if ballHit:
-        if ent.y < 1000 + ent.radius:
-            time += 0.04
-            ent.y = findNewPath(y, angle, time)
+        if ent.y < 1000 + ent.radius:                                                  # determines if the ball is still in the air
+            time += 0.04                                                               # increments time
+            ent.y = findNewPath(y, angle, time)                                        # application of gravitational acceleration
         else:
-            ballHit = False
+            ballHit = False                                                            # resets ball and timer
             time = 0
             ent.y = 960
             counter += tm.perf_counter() - counter
     
-    refresh()
-    ent.endpoint = findNewEnd(bx, by, ent.x, ent.y)
+    refresh()                                                                          # re-renders the screen's objects
+    ent.endpoint = findNewEnd(bx, by, ent.x, ent.y)                                    # calculates the point on the circumference of the ball that is opposite to the position of the cursor
 
-    pygame.display.update()
+    pygame.display.update()                                                            # refreshes the display
 
 pygame.quit()
