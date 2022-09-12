@@ -22,6 +22,9 @@ A small physics engine written using the Pygame module library. The design of th
 ## Future Directions 
 Several flaws appear in the chosen **method of collision**, where the *cursor* may collide too quickly with the ball and clip through there-on. Additionally, this would cause the algorithms used to calculate *angular velocity* to apply force to the ball at an angle opposite to where the *cursor* was last known approaching (i.e *as the cursor clips from below, a downward force is applied to the ball*). Moving forward from this, a solution may exist in exploring other methods of **collision detection** outside of checking-per-frame, with additional research prescribing the necessary action onward in its own vitality.
 
+Additionally, more work can be put into cleaning up and organizing the structure of the code. This is especially apparent in the localization of the screen's display,
+where values are often shown as integer conversions of the screen's native display multiplied by an arbitrary ratio. With this in mind, future endeavors into increasing maintability might include representing these values through descriptive variables, so that they are read less as fixed numbers and more as mutable values.
+
 ## Links
 [Pygame Documentation](https://www.pygame.org/docs/)
 
