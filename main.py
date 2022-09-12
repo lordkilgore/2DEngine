@@ -1,27 +1,29 @@
 import pygame, math
+from pyautogui import size
 import time as tm
 
-win = pygame.display.set_mode((1000, 1000))    # initializes the screen
-pygame.display.set_caption("trig demo 5") 
-pygame.font.init()                             # initializes Pygame's font directory
+screenDimension = int(size()[1] * 0.8)
+win = pygame.display.set_mode((screenDimension, screenDimension))
+pygame.display.set_caption("trig demo 5")
+pygame.font.init()
 clock = pygame.time.Clock()
 
 
 class Ball(object):
     def __init__(self, x, y, radius, endpoint):
-        self.x = x                                      # position of the ball on the x axis
-        self.y = y                                      # position of the ball on the y axis
-        self.radius = radius                            # radius of the ball
-        self.endpoint = endpoint                        # a point that rests on the circumference of the ball
+        self.x = x
+        self.y = y
+        self.radius = radius
+        self.endpoint = endpoint
     
     def draw(self):
-        pygame.draw.circle(win, (0, 0, 0), (self.x, self.y), self.radius)                # draws the ball
+        pygame.draw.circle(win, (0, 0, 0), (self.x, self.y), self.radius)
     
     def drawLine(self):
-        pygame.draw.line(win, (255, 255, 255), (self.x, self.y), self.endpoint, 2)       # draws a line opposite to the shortest line drawn between the cursor and the ball
+        pygame.draw.line(win, (255, 255, 255), (self.x, self.y), self.endpoint, 2)
 
 
-def drawText(text, pos):                                                                 # function used to draw text onto the screen
+def drawText(text, pos):
     render_font = pygame.font.SysFont("corbel", 45)
     blittext = render_font.render(text, 1, (0, 0, 0))
     win.blit(blittext, pos)
@@ -30,18 +32,18 @@ def drawText(text, pos):                                                        
 def refresh():
     global counter
     
-    win.fill([255, 255, 255])                                                            # screen fills itself again so as to erase objects rendered from the previous frame
-    ent.draw()                                                                           # "ent" is an instance of the class Ball
+    win.fill([255, 255, 255])
+    ent.draw()
     ent.drawLine()
 
-    pygame.draw.line(win, (255, 0, 0), (ent.x, ent.y), (bx, by), 3)                               # line drawn between the center of "ent" and the cursor
-    pygame.draw.line(win, (0, 0, 0), (ent.x, ent.y), (bx, (by - (by - ent.y))))                   # line drawn showing the horizontal component vector
-    pygame.draw.line(win, (0, 0, 0), (bx, (by - (by - ent.y))), ((ent.x + (bx - ent.x)), by))     # line drawn showing the vertical component vector
+    pygame.draw.line(win, (255, 0, 0), (ent.x, ent.y), (bx, by), 3)
+    pygame.draw.line(win, (0, 0, 0), (ent.x, ent.y), (bx, (by - (by - ent.y))))
+    pygame.draw.line(win, (0, 0, 0), (bx, (by - (by - ent.y))), ((ent.x + (bx - ent.x)), by))
 
-    if ballHit:                                                                          # "ballHit" is a boolean signifying whether the ball has been collided with or not
-        drawText(str(math.floor(tm.perf_counter() - counter)), (500, 50))                # draws the timer
+    if ballHit:
+        drawText(str(math.floor(tm.perf_counter() - counter)), (int(screenDimension * 0.5), int(screenDimension * 0.05)))
 
-def findNewPath(sy, angle, time):                                                        # estimates the path of the ball based on angle of contact, application of gravity, and a static scalar "power"
+def findNewPath(sy, angle, time):
     ent.x += round(-math.cos(angle) * bounce * 2)
 
     velY = -math.sin(angle) * power  
@@ -51,7 +53,7 @@ def findNewPath(sy, angle, time):                                               
     return newY
 
 
-def findNewEnd(mx, my, cx, cy):                                       # produces a point so that is plotted opposite to another point
+def findNewEnd(mx, my, cx, cy):
 
     angle = math.atan2(my - cy, mx - cx)
     
@@ -61,7 +63,7 @@ def findNewEnd(mx, my, cx, cy):                                       # produces
     return newX, newY
 
 
-def findAngle(mx, my):                                      # produces an angle based on the point at which the ball is contacted by the cursor
+def findAngle(mx, my):
     sX = ent.x
     sY = ent.y
     try:
@@ -80,56 +82,56 @@ def findAngle(mx, my):                                      # produces an angle 
 
     return angle
 
-ballHit = False                                           # "ballHit" is a boolean signifying whether the ball has been collided with or not
+ballHit = False
 
-bounce = 1                                                # "bounce" represents a number from 1 or -1 that signifies whether the ball should bounce or not
-time = 0                                                  # helps calculate the application of gravity over the time elapsed since last the ball was collided with
-y = 0
-counter = 0                                               # simulates an "in-game" timer
+bounce = 1
+angle = 0
+time = 0
+counter = 0
 
-ent = Ball(500, 500, 40, (540, 500))                      # instantiates an instance "ent" of class Ball
-main = True                                                
+ent = Ball(int(screenDimension * 0.5), int(screenDimension * 0.5), int(screenDimension * .04), (int(screenDimension * 0.54), int(screenDimension * 0.5)))
+main = True
 while main:
-    for e in pygame.event.get():                          # tells the game to close itself upon hitting escape
+    for e in pygame.event.get():
         if e.type == pygame.QUIT:
             main = False
     
-    bx, by = pygame.mouse.get_pos()                       # gets the position of the cursor
-    getKey = pygame.key.get_pressed()                     # gets the name of any key pressed
+    bx, by = pygame.mouse.get_pos()
+    getKey = pygame.key.get_pressed()
 
-    if getKey[pygame.K_SPACE]:                            # if space is pressed, the ball and timer are reset
+    if getKey[pygame.K_SPACE]:
         ballHit = False
-        ent.x = 500
-        ent.y = 500
+        ent.x = int(screenDimension * 0.5)
+        ent.y = int(screenDimension * 0.5)
         counter += tm.perf_counter() - counter
 
-    if (1000 < ent.x + ent.radius or 0 > ent.x - ent.radius) and bounce == 1:          # determines whether the ball should bounce or not based on its position to either border
+    if (screenDimension < ent.x + ent.radius or 0 > ent.x - ent.radius) and bounce == 1:
         bounce = -1
-    elif (1000 < ent.x + ent.radius or 0 > ent.x - ent.radius) and bounce == -1:
+    elif (screenDimension < ent.x + ent.radius or 0 > ent.x - ent.radius) and bounce == -1:
         bounce = 1
 
-    if bx in range((ent.x - ent.radius), (ent.x + ent.radius)):                       
-        if by in range((ent.y - ent.radius), (ent.y + ent.radius)):                    # determines if the cursor is colliding with the ball
+    if bx in range((ent.x - ent.radius), (ent.x + ent.radius)):
+        if by in range((ent.y - ent.radius), (ent.y + ent.radius)):
             ballHit = True
             time = 0
             bounce = 1
             y = ent.y
-            power = 60
+            power = int(screenDimension * 0.06)
             angle = findAngle(bx, by)
     
     if ballHit:
-        if ent.y < 1000 + ent.radius:                                                  # determines if the ball is still in the air
-            time += 0.04                                                               # increments time
-            ent.y = findNewPath(y, angle, time)                                        # application of gravitational acceleration
+        if ent.y < screenDimension + ent.radius:
+            time += screenDimension * .00004
+            ent.y = findNewPath(y, angle, time)
         else:
-            ballHit = False                                                            # resets ball and timer
+            ballHit = False
             time = 0
-            ent.y = 960
+            ent.y = int(screenDimension * 0.96)
             counter += tm.perf_counter() - counter
     
-    refresh()                                                                          # re-renders the screen's objects
-    ent.endpoint = findNewEnd(bx, by, ent.x, ent.y)                                    # calculates the point on the circumference of the ball that is opposite to the position of the cursor
+    refresh()
+    ent.endpoint = findNewEnd(bx, by, ent.x, ent.y)
 
-    pygame.display.update()                                                            # refreshes the display
+    pygame.display.update()
 
 pygame.quit()
