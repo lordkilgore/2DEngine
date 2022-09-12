@@ -1,12 +1,13 @@
 import pygame, math
-from pyautogui import size
 import time as tm
 
-screenDimension = int(size()[1] * 0.8)
+pygame.display.init()                                                               # initializes Pygame's video system
+
+screenDimension = int(pygame.display.Info().current_w * 0.5)                        # localizes screen size
 win = pygame.display.set_mode((screenDimension, screenDimension))
 pygame.display.set_caption("trig demo 5")
-pygame.font.init()
-clock = pygame.time.Clock()
+
+pygame.font.init()                                                                  # initializes Pygame's font system
 
 
 class Ball(object):
