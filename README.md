@@ -13,7 +13,7 @@ A small physics engine written using the Pygame module library. The design of th
 
 ## *Key Features*
 - An **internal clock** that measures the length in which the ball has provided itself abstinence from floor collision; its "*uptime*"
-- Visual indicators delineating the **vectors** applied in black, the *cursor's* **distance** from the ball in red, and the **inverse** of the *cursor's* angle from the ball in white 
+- Visual indicators delineating the **vector components** applied in black, the *cursor's* **distance** from the ball in red, and the **inverse** of the *cursor's* angle from the ball in white 
   - This demonstrates the direct relation between *triangular geometry* and the application of force therein onto an object
 - Application of **Newtonian Mechanics** such that the ball's interaction remains inert, predictable, and within realistic preoccupation
   - As the ball collides with a static object, in this case the *cursor* and borders of the screen, an opposite but equal force is applied to the ball
