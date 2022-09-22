@@ -1,5 +1,5 @@
 # 2DEngine
-A small physics engine written using the Pygame module library. The design of the program takes influence from the classical model of forces interacting with one another and uses the axioms found in Euclidean geometry to determine angles, lines, and collision between a ball and the *cursor* across a two-dimensional plane.
+A small physics engine written using the Pygame module library. The design of the program is influenced by the classical model of forces interacting with one another, and uses the axioms found in Euclidean geometry to determine angles, key points, and collision between a ball and the *cursor* across a two-dimensional plane.
 
 ### Installation
   Requires [Python3](https://www.python.org/downloads/) and [Pip](https://pypi.org/project/pip/)
@@ -20,9 +20,9 @@ A small physics engine written using the Pygame module library. The design of th
   - The ball is applied with a constant force downwards using a fixed scalar multiplied by its time since last contact to simulate *gravitational acceleration*
 
 ## Future Directions 
-Several flaws appear in the chosen **method of collision**, where the *cursor* may collide too quickly with the ball and clip through therein. Additionally, this would cause the algorithms used to calculate *angular direction* to apply force to the ball at an angle opposite to where the *cursor* was last known approaching (i.e *as the cursor clips from below, a downward force is applied to the ball*). Moving forward from this, a solution may exist in exploring other methods of **collision detection** outside of checking-per-frame, with additional research prescribing the necessary action onward in its own vitality.
+Several flaws appear in the chosen **method of collision**, where the *cursor* may collide too quickly and clip through the ball. As a result, the algorithms responsible for calculating *angular direction* malfunction and move the ball based on the position of the cursor while it is *inside* the ball, as opposed to the *surface* of the ball (i.e *as the cursor clips from below, a downward force is applied to the ball*). Moving forward, exploring other strategies to **detect collision** outside of checking-per-frame would prevent this from occurring. 
 
-Additionally, more work can be put into cleaning up and organizing the structure of the code. This is especially apparent in the **localization of the screen's display**, where values are often shown as integer conversions of the screen's native display adjusted by an arbitrary ratio. With this in mind, future endeavors into increasing maintainability might include representing these values through descriptive **variables**, so that they are read less as fixed numbers and more as *mutable* values.
+For further optimization, more work can be put into cleaning up and organizing the structure of the code. This is especially apparent in the **localization of the screen's display**, where values are often shown as the screen's native display adjusted by an arbitrary scalar, converted into an integer. With this in mind, an opportunity to increase maintainability might include assigning these values to descriptive **variables** to indicate that they are not fixed, but *mutable* values.
 
 ## Links
 [Pygame Documentation](https://www.pygame.org/docs/)
