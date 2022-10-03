@@ -19,6 +19,8 @@ A small physics engine written using the Pygame module library. The design of th
   - As the ball collides with a static object, in this case the *cursor* and borders of the screen, an opposite but equal force is applied to the ball
   - The ball is applied with a constant force downwards using a fixed scalar multiplied by its time since last contact to simulate *gravitational acceleration*
 
+![](https://media0.giphy.com/media/qU9r485kQntWCwgWzh/giphy.gif?cid=790b7611ca4c1be972cba6f5843bb3bddf0cab5d6eb73a70&rid=giphy.gif&ct=g)
+
 ## Future Directions 
 Several flaws appear in the chosen **method of collision**, where the *cursor* may collide too quickly and clip through the ball. As a result, the algorithms responsible for calculating *angular direction* malfunction and move the ball based on the position of the cursor while it is *inside* the ball, as opposed to the *surface* of the ball (i.e *as the cursor clips from below, a downward force is applied to the ball*). Moving forward, exploring other strategies to **detect collision** outside of checking-per-frame would prevent this from occurring. 
 
